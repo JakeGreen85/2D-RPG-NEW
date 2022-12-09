@@ -10,11 +10,13 @@ public class GameManager : MonoBehaviour
     public GameObject[] statsText;
     public GameObject QuestPrefab;
     public GameObject QuestComplete;
+    public GameObject WorkshopUI;
     // Start is called before the first frame update
     void Start()
     {
-        QuestPrefab.gameObject.SetActive(false);
-        QuestComplete.gameObject.SetActive(false);
+        QuestPrefab.SetActive(false);
+        QuestComplete.SetActive(false);
+        WorkshopUI.SetActive(false);
     }
 
     // Update is called once per frame
