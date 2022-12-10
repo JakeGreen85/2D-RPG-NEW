@@ -15,6 +15,7 @@ public class InventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         inventorySlots = GameObject.FindGameObjectsWithTag("Inventory Slot");
         equipmentSlots = GameObject.FindGameObjectsWithTag("Equipment Slot");
         dUI = GetComponent<DisplayUI>();

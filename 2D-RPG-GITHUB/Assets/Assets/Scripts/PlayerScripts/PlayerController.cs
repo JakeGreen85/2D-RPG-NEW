@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     public GameObject[] spells;
     public GameObject invManager;
     public GameObject mapCam;
+    public GameObject GM;
 
     void Start()
     {
@@ -49,7 +50,7 @@ public class PlayerController : MonoBehaviour
         expbar = GameObject.Find("ExpBar").GetComponent<HealthBar>();
         manabar = GameObject.Find("ManaBar").GetComponent<HealthBar>();
         healthbar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
-
+        GM = GameObject.Find("GameManager");
         // transform.position = spawnPos;
         health = maxHealth;
         rb = GetComponent<Rigidbody2D>();
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
         expbar.SetMaxValue(expToGo);
         expbar.SetValue(experience);
         invManager = GameObject.Find("InventoryManager");
+        DontDestroyOnLoad(gameObject);
     }
 
 
@@ -140,7 +142,8 @@ public class PlayerController : MonoBehaviour
                 if(col.CompareTag("Door")){
                     // Open door and go to the corresponding scene
                     Debug.Log("Door opened");
-                    col.GetComponent<OpenDoor>().DoorOpen();
+                    col.GetComponent<OpenDoor>().Enter();
+                    transform.position = Vector3.zero;
                 }
                 if(col.CompareTag("EnemyLoot")){
                     // Loot the enemy

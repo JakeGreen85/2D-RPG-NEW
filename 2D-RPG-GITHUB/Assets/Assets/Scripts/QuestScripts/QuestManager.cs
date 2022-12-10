@@ -18,6 +18,7 @@ public class QuestManager : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

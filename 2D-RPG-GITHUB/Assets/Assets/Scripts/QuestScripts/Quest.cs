@@ -32,6 +32,10 @@ public class Quest : MonoBehaviour
         goalInfo = goalinfo;
     }
 
+    private void Start() {
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void CheckKill(string kType){
         if(kType == killType){
             kills++;
