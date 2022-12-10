@@ -18,6 +18,7 @@ TagManager:
   - Rock
   - Trash
   - Equipment
+  - Walls
   layers:
   - Default
   - TransparentFX

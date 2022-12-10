@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject QuestPrefab;
     public GameObject QuestComplete;
     public GameObject WorkshopUI;
+    public GameObject MapCam;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
         QuestPrefab.SetActive(false);
         QuestComplete.SetActive(false);
         WorkshopUI.SetActive(false);
+        MapCam.SetActive(false);
     }
 
     // Update is called once per frame

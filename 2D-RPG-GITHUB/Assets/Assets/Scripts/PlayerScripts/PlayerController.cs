@@ -20,8 +20,6 @@ public class PlayerController : MonoBehaviour
     // Spawn position of the player object
     public Vector2 spawnPos;
 
-
-    public Camera mainCam;
     private Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
     public ContactFilter2D movementFilter;
@@ -43,6 +41,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject[] spells;
     public GameObject invManager;
+    public GameObject mapCam;
 
     void Start()
     {
@@ -51,7 +50,7 @@ public class PlayerController : MonoBehaviour
         manabar = GameObject.Find("ManaBar").GetComponent<HealthBar>();
         healthbar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
 
-        transform.position = spawnPos;
+        // transform.position = spawnPos;
         health = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         healthbar.SetMaxValue(maxHealth);
@@ -121,6 +120,10 @@ public class PlayerController : MonoBehaviour
             invManager.GetComponent<InventoryManager>().EnableEquipment();
         }
 
+        if(Input.GetKeyDown(KeyCode.M)){
+            mapCam.SetActive(!mapCam.activeInHierarchy);
+        }
+
 
         if(Input.GetKeyDown(KeyCode.E)){
             Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, attackRange);
@@ -153,6 +156,12 @@ public class PlayerController : MonoBehaviour
                 if(col.CompareTag("Workshop")){
                     col.GetComponent<Workshop>().ToggleUI();
                 }
+                foreach(GameObject q in GameObject.Find("QuestManager").GetComponent<QuestManager>().activeQuests){
+                    if(q != null && col.tag != null){
+                        q.GetComponent<Quest>().CheckObjective(col.gameObject);
+                    }
+                }
+                
             }
         }
 

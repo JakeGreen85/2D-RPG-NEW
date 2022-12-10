@@ -10,6 +10,9 @@ public class Quest : MonoBehaviour
     public int killGoal;
     public int kills;
     public string killType;
+    public int objGoal;
+    public int objectives;
+    public string objType;
     public bool complete;
     public GameObject[] rewards;
     public int goldReward;
@@ -43,8 +46,15 @@ public class Quest : MonoBehaviour
         }
     }
 
+    public void CheckObjective(GameObject obj){
+        if(obj.CompareTag(objType)){
+            objectives++;
+            CheckComplete();
+        }
+    }
+
     public void CheckComplete(){
-        if(gathers == gatherGoal && kills == killGoal){
+        if(gathers == gatherGoal && kills == killGoal && objectives == objGoal){
             complete = true;
         }
     }

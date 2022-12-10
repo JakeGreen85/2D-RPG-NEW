@@ -18,8 +18,9 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        trigger = false;
-        spawned = false;
+        SpawnEnemies();
+        trigger = true;
+        spawned = true;
         player = GameObject.Find("Player");
     }
 
