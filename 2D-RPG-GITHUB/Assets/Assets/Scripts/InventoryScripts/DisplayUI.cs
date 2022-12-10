@@ -9,9 +9,9 @@ public class DisplayUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InvUI = GameObject.Find("InventoryUI");
+        equipUI = GameObject.Find("EquipmentUI");
     }
-
-    
 
     public void DisplayEquipment(){
         if(equipUI.active){

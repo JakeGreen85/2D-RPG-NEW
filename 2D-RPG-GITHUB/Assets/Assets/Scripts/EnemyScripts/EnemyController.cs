@@ -33,13 +33,13 @@ public class EnemyController : MonoBehaviour
         if(Vector2.Distance(transform.position, player.transform.position)<4 && Vector2.Distance(transform.position, player.transform.position)>0.5f){
             enemyAnim.SetFloat("Speed", 1f);
             transform.Translate(-(transform.position - Vector3.MoveTowards(transform.position, player.transform.position, 1)).normalized * speed * Time.deltaTime);
-            if (Vector2.Distance(transform.position, player.transform.position)<attackRange && Time.time > nextAttack){
-                Attack();
-                nextAttack = Time.time + (1/attackSpeed);
-            }
         }
         else{
             enemyAnim.SetFloat("Speed", 0f);
+        }
+        if (Vector2.Distance(transform.position, player.transform.position)<attackRange && Time.time > nextAttack){
+            Attack();
+            nextAttack = Time.time + (1/attackSpeed);
         }
     }
 

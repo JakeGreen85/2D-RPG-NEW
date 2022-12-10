@@ -36,8 +36,8 @@ public class Quest : MonoBehaviour
         }
     }
 
-    public void CheckGather(string gType){
-        if(gType == gatherType){
+    public void CheckGather(GameObject gather){
+        if(gather.CompareTag(gatherType)){
             gathers++;
             CheckComplete();   
         }

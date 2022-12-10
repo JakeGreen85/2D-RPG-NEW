@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     // Player movement variables
     float horizontalInput;
+    public SceneManager SM;
     float verticalInput;
     public float speed = 5f;
     float offset = 0.05f;
@@ -45,6 +47,10 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         // Set up some variables when launching the game
+        expbar = GameObject.Find("ExpBar").GetComponent<HealthBar>();
+        manabar = GameObject.Find("ManaBar").GetComponent<HealthBar>();
+        healthbar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
+
         transform.position = spawnPos;
         health = maxHealth;
         rb = GetComponent<Rigidbody2D>();
@@ -55,6 +61,7 @@ public class PlayerController : MonoBehaviour
         manabar.SetValue(mana);
         expbar.SetMaxValue(expToGo);
         expbar.SetValue(experience);
+        invManager = GameObject.Find("InventoryManager");
     }
 
 
@@ -90,15 +97,20 @@ public class PlayerController : MonoBehaviour
 
         // COMBAT INPUTS - WORKS
         if(Input.GetKeyDown(KeyCode.Alpha1) && mana > 0 && Time.time > nextAttack){
-            Attack();
-            nextAttack = Time.time + (1/attackSpeed);
+            UseAbility1();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha2)){
+            UseAbility2();
         }
 
         // Temporary test for health bar (TO BE REMOVED)
-        if(Input.GetKeyDown(KeyCode.H)){
-            TakeDamage(20);
-            mana=maxmana;
-            manabar.SetValue(mana);
+        if(Input.GetKeyDown(KeyCode.Alpha3)){
+            UseAbility3();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha4)){
+            UseAbility4();
         }
 
         if(Input.GetKeyDown(KeyCode.B)){
@@ -109,14 +121,6 @@ public class PlayerController : MonoBehaviour
             invManager.GetComponent<InventoryManager>().EnableEquipment();
         }
 
-        if(Input.GetKeyDown(KeyCode.Q)){
-            health += 20;
-            healthbar.SetValue(health);
-        }
-
-        if(Input.GetKeyDown(KeyCode.M)){
-            invManager.GetComponent<EquippedItemsController>().EquipItem(invManager.GetComponent<PlayerInventoryController>().inventory[0]);
-        }
 
         if(Input.GetKeyDown(KeyCode.E)){
             Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, attackRange);
@@ -217,7 +221,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void Die(){
-        transform.position = Vector3.zero;
+        transform.position = spawnPos;
         health = maxHealth;
         mana = maxmana;
         healthbar.SetValue(health);
@@ -240,5 +244,24 @@ public class PlayerController : MonoBehaviour
         experience += expGained;
         expbar.SetValue(experience);
         gold += goldGained;
+    }
+
+    public void UseAbility1(){
+        Attack();
+        nextAttack = Time.time + (1/attackSpeed);
+    }
+
+    public void UseAbility2(){
+        
+    }
+
+    public void UseAbility3(){
+        mana=maxmana;
+        manabar.SetValue(mana);
+    }
+
+    public void UseAbility4(){
+        health += 20;
+        healthbar.SetValue(health);
     }
 }

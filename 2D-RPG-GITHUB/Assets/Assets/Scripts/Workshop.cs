@@ -7,6 +7,9 @@ public class Workshop : MonoBehaviour
     public GameObject UI;
     public GameObject selectedItem;
     public GameObject[] craftables;
+    private void Start() {
+        UI = GameObject.Find("WorkshopUI");
+    }
     public void ToggleUI(){
         UI.SetActive(!UI.activeInHierarchy);
     }

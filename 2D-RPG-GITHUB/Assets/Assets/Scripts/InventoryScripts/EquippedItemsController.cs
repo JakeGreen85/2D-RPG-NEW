@@ -26,8 +26,8 @@ public class EquippedItemsController : MonoBehaviour
         GameObject.Find("Player").GetComponent<PlayerController>().atk += stats.attack;
         GameObject.Find("Player").GetComponent<PlayerController>().speed += stats.speed;
         GetComponent<PlayerInventoryController>().RemoveItem(itemToEquip);
-        GameObject.Find("InventoryManager").GetComponent<InventoryManager>().UpdateEquipment();
-        GameObject.Find("InventoryManager").GetComponent<InventoryManager>().UpdateInventory();
+        GetComponent<InventoryManager>().UpdateEquipment();
+        GetComponent<InventoryManager>().UpdateInventory();
     }
 
     public void UnequipItem(GameObject itemToUnequip){

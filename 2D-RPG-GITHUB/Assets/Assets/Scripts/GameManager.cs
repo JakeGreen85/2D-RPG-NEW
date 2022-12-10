@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        QuestPrefab = GameObject.Find("QuestGiven");
+        QuestComplete = GameObject.Find("QuestComplete");
+        WorkshopUI = GameObject.Find("WorkshopUI");
+        goldDisplay = GameObject.Find("GoldDisplayText");
         QuestPrefab.SetActive(false);
         QuestComplete.SetActive(false);
         WorkshopUI.SetActive(false);

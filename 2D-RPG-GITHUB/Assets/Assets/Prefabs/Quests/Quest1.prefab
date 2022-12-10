@@ -44,17 +44,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbd6dea09a224f40828d820cf5d3950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gatherGoal: 0
+  gatherGoal: 5
   gathers: 0
-  gatherType: 
-  killGoal: 3
+  gatherType: Trash
+  killGoal: 0
   kills: 0
-  killType: Slime
+  killType: 
   complete: 0
   rewards:
-  - {fileID: 8367765589959598035, guid: 888fd2aa8af26b9418c10a6eeceb4180, type: 3}
+  - {fileID: 8367765589959598035, guid: bc8f910fb5211d6479c2233bbede28e8, type: 3}
   goldReward: 50
   expReward: 50
-  questInfo: Welcome, Traveller. We have been overrun by slimes. Please help us get
-    rid of the infestation.
-  goalInfo: Kill 3 slimes
+  questInfo: Welcome, Stranger! Someone threw trash all over our yard. Can you help
+    us clear it out?
+  goalInfo: Collect 5 pieces of trash

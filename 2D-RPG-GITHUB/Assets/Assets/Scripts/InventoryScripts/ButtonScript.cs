@@ -19,7 +19,7 @@ public class ButtonScript : MonoBehaviour
         if(gameObject.CompareTag("Inventory Slot") && invManager.GetComponent<PlayerInventoryController>().inventory[n-1] != null){
 		    invManager.GetComponent<EquippedItemsController>().EquipItem(invManager.GetComponent<PlayerInventoryController>().inventory[n-1]);
         }
-        if(gameObject.CompareTag("Equipment Slot") && invManager.GetComponent<EquippedItemsController>().equippedItems[n-1] != null){
+        else if(gameObject.CompareTag("Equipment Slot") && invManager.GetComponent<EquippedItemsController>().equippedItems[n-1] != null){
             invManager.GetComponent<EquippedItemsController>().UnequipItem(invManager.GetComponent<EquippedItemsController>().equippedItems[n-1]);
         }
 	}

@@ -21,7 +21,17 @@ public class LootEnemy : MonoBehaviour
     public void DropLoot(){
         GameObject drop = drops[rand.Next(drops.Length)];
         Debug.Log(drop.ToString());
-        GameObject.Find("InventoryManager").GetComponent<PlayerInventoryController>().AddItem(drop);
-        GameObject.Destroy(gameObject);
+        
+        if(GameObject.Find("InventoryManager").GetComponent<PlayerInventoryController>().AddItem(drop)){
+            foreach(GameObject q in GameObject.Find("QuestManager").GetComponent<QuestManager>().activeQuests){
+                if(q != null){
+                    q.GetComponent<Quest>().CheckGather(drop);
+                }
+            }
+            GameObject.Destroy(gameObject);
+        }
+        else{
+            Debug.Log("Inventory Full");
+        }
     }
 }

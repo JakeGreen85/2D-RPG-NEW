@@ -4,21 +4,7 @@ using UnityEngine;
 
 public class PlayerInventoryController : MonoBehaviour
 {
-    public struct item{
-
-    }
-    public struct weapon{
-        int attack;
-        int levelReq;
-        int attackRange;
-    }
-    public struct equipment{
-        int health;
-        int armor;
-        int levelReq;
-        int mana;
-    }
-    public GameObject[] inventory = new GameObject[16];
+    public GameObject[] inventory;
     public GameObject invManager;
     public int sp = 0;
     // Start is called before the first frame update
@@ -33,14 +19,19 @@ public class PlayerInventoryController : MonoBehaviour
         
     }
 
-    public void AddItem(GameObject item){
-        inventory[sp] = item;
-        sp++;
-        invManager.GetComponent<InventoryManager>().UpdateInventory();
+    public bool AddItem(GameObject item){
+        if(sp<inventory.Length){
+            inventory[sp] = item;
+            sp++;
+            invManager.GetComponent<InventoryManager>().UpdateInventory();
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public void RemoveItem(GameObject item){
-        sp--;
         for(int i = 0; i<inventory.Length; i++){
             if(inventory[i] == item){
                 for(int j = i; j<inventory.Length; j++){
@@ -50,6 +41,7 @@ public class PlayerInventoryController : MonoBehaviour
                         inventory[j] = null;
                     }
                 }
+                sp--;
                 invManager.GetComponent<InventoryManager>().UpdateInventory();
                 return;
             }

@@ -122,9 +122,10 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  healthbar: {fileID: 0}
-  manabar: {fileID: 0}
-  expbar: {fileID: 0}
+  healthbar: {fileID: 2182110932801847740, guid: 3162970ccb8101349b89fc3488fa9c11,
+    type: 3}
+  manabar: {fileID: 4805151442460101326, guid: d63acea86ac3af84eab77191678cf025, type: 3}
+  expbar: {fileID: 4927654714092410265, guid: b0710d29c407e1344844ce82f1a7d717, type: 3}
   health: 0
   attackRange: 1
   maxHealth: 100
@@ -137,6 +138,8 @@ MonoBehaviour:
   atk: 20
   spells:
   - {fileID: 9086554753943879620, guid: 16b29d6dec2bcac4088076e472b24833, type: 3}
+  invManager: {fileID: 5659360517919327375, guid: dee69194035a0ba41b93831d6b619847,
+    type: 3}
 --- !u!114 &8927607320119242353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +189,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.15, y: 0.21}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

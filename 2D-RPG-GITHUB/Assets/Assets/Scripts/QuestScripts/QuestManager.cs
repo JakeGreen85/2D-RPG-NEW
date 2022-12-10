@@ -7,23 +7,13 @@ using UnityEngine.UI;
 public class QuestManager : MonoBehaviour
 {
     public GameObject[] activeQuests = new GameObject[10];
-    public GameObject[] completedQuests;
+    public GameObject[] completedQuests = new GameObject[20];
     public GameObject player;
 
 
     public GameObject questGiven;
     public GameObject questComplete;
     public GameObject givenPrefab;
-    public GameObject givenQuestInfoText;
-    public GameObject givenGoalInfoText;
-    public GameObject givenGoldRewardsText;
-    public GameObject GivenExpRewardsText;
-    public GameObject GivenItemRewardSprite;
-    public GameObject completeQuestInfoText;
-    public GameObject completeGoalInfoText;
-    public GameObject completeGoldRewardsText;
-    public GameObject completeExpRewardsText;
-    public GameObject completeItemRewardSprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,11 +30,11 @@ public class QuestManager : MonoBehaviour
         Debug.Log("Quest given");
         givenPrefab.gameObject.SetActive(true);
         questGiven = quest;
-        givenQuestInfoText.GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().questInfo;
-        givenGoalInfoText.GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().goalInfo;
-        givenGoldRewardsText.GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().goldReward.ToString();
-        GivenExpRewardsText.GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().expReward.ToString();
-        GivenItemRewardSprite.GetComponent<Image>().sprite = quest.GetComponent<Quest>().rewards[0].GetComponent<SpriteRenderer>().sprite;
+        GameObject.Find("QuestInfoText").GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().questInfo;
+        GameObject.Find("GoalInfoText").GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().goalInfo;
+        GameObject.Find("GoldText").GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().goldReward.ToString();
+        GameObject.Find("ExpText").GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().expReward.ToString();
+        GameObject.Find("ItemRewardSprite").GetComponent<Image>().sprite = quest.GetComponent<Quest>().rewards[0].GetComponent<SpriteRenderer>().sprite;
     }
 
     public void CloseQuest(){
@@ -64,13 +54,13 @@ public class QuestManager : MonoBehaviour
         questComplete.gameObject.SetActive(true);
         questGiven = quest;
         if(quest.GetComponent<Quest>().killGoal == 0){
-            completeGoalInfoText.GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().gathers.ToString() + "/" + quest.GetComponent<Quest>().gatherGoal.ToString() + " collected";
+            GameObject.Find("CompleteGoalInfoText").GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().gathers.ToString() + "/" + quest.GetComponent<Quest>().gatherGoal.ToString() + " collected";
         }else{
-            completeGoalInfoText.GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().kills.ToString() + "/" + quest.GetComponent<Quest>().killGoal.ToString() + " killed";
+            GameObject.Find("CompleteGoalInfoText").GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().kills.ToString() + "/" + quest.GetComponent<Quest>().killGoal.ToString() + " killed";
         }
-        completeGoldRewardsText.GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().goldReward.ToString();
-        completeExpRewardsText.GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().expReward.ToString();
-        completeItemRewardSprite.GetComponent<Image>().sprite = quest.GetComponent<Quest>().rewards[0].GetComponent<SpriteRenderer>().sprite;
+        GameObject.Find("CompleteGoldText").GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().goldReward.ToString();
+        GameObject.Find("CompleteExpText").GetComponent<TextMeshProUGUI>().text = quest.GetComponent<Quest>().expReward.ToString();
+        GameObject.Find("ItemCompleteSprite").GetComponent<Image>().sprite = quest.GetComponent<Quest>().rewards[0].GetComponent<SpriteRenderer>().sprite;
         if(quest.GetComponent<Quest>().kills >= quest.GetComponent<Quest>().killGoal && quest.GetComponent<Quest>().gathers >= quest.GetComponent<Quest>().gatherGoal){
             return true;
         }
@@ -83,14 +73,31 @@ public class QuestManager : MonoBehaviour
         if(questGiven.GetComponent<Quest>().complete){
             player.GetComponent<PlayerController>().gold += questGiven.GetComponent<Quest>().goldReward;
             player.GetComponent<PlayerController>().experience += questGiven.GetComponent<Quest>().expReward;
+            for(int i = 0; i < questGiven.GetComponent<Quest>().gatherGoal; i++){
+                GameObject.Find("InventoryManager").GetComponent<PlayerInventoryController>().RemoveItem(GameObject.FindGameObjectWithTag(questGiven.GetComponent<Quest>().gatherType));
+            }
             foreach(GameObject reward in questGiven.GetComponent<Quest>().rewards){
                 GameObject.Find("InventoryManager").GetComponent<PlayerInventoryController>().AddItem(reward);
             }
+            //completedQuests[0] = questGiven;
+            RemoveQuest();
             CloseQuest();
             // Give rewards
             // Give the next quest ?
         }
     }
+
+public void RemoveQuest(){
+    for(int i = 0; i < activeQuests.Length; i++){
+        if(activeQuests[i] == questGiven){
+            activeQuests[i] = null;
+            for(int j = i; j < activeQuests.Length-1; j++){
+                activeQuests[j] = activeQuests[j+1];
+            }
+            activeQuests[activeQuests.Length-1] = null;
+        }
+    }
+}
 
     public void addQuest(){
         for(int i = 0; i < activeQuests.Length; i++){

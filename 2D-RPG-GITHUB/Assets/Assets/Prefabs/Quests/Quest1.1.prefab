@@ -52,8 +52,9 @@ MonoBehaviour:
   killType: 
   complete: 0
   rewards:
-  - {fileID: 8367765589959598035, guid: 888fd2aa8af26b9418c10a6eeceb4180, type: 3}
+  - {fileID: 4186049484520309567, guid: 330b6c815a668ed4781421f85f13beb7, type: 3}
   goldReward: 50
   expReward: 50
-  questInfo: Good job getting the infestation under control. Let's gather some materials.
+  questInfo: Thanks for cleaning up the yard! We are planning to do some renovation.
+    Could you gather some wood for us? There is a forest just east of here.
   goalInfo: Collect 3 wood

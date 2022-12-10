@@ -15,6 +15,9 @@ TagManager:
   - Wood
   - Gather Material
   - Workshop
+  - Rock
+  - Trash
+  - Equipment
   layers:
   - Default
   - TransparentFX
