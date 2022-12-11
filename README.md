@@ -8,7 +8,7 @@ I started out with a test scene, where I could test my implementations quickly. 
 - Quests
 - Crafting
 - Gathering materials
-- Equipping and remomving items
+- Equipping and removing items
 
 What's new?
 - Finished the basic environment in the tutorial scene
