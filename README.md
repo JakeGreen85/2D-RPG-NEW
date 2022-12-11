@@ -14,4 +14,3 @@ What's new?
 To do:
 - Implement singleton design to better switch between scenes (GameManager, InventoryManager, Cameras, Player, EventSystem, etc.)
 - Vendor NPCs so players are able to buy and sell items
-- 
