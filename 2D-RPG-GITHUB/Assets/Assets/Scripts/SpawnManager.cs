@@ -11,6 +11,7 @@ public class SpawnManager : MonoBehaviour
     private GameObject player;
     public int xRange;
     public int yRange;
+    public int totalEnemies;
 
     System.Random rand = new System.Random();
 
@@ -48,15 +49,9 @@ public class SpawnManager : MonoBehaviour
     // Spawns enemies in the game
     void SpawnEnemies()
     {
-        int j = 0;
         for(int i = 0; i < numEnemies; i++)
         {
-            Instantiate(enemies[j], (transform.position + new Vector3(rand.Next(xRange), rand.Next(yRange), 0)), new Quaternion(0,0,0,0));
-            j++;
-            if (j >= enemies.Count)
-            {
-                j = 0;
-            }
+            Instantiate(enemies[i%enemies.Count], (transform.position + new Vector3(rand.Next(xRange), rand.Next(yRange), 0)), new Quaternion(0,0,0,0));
         }
     }
 
