@@ -9,21 +9,41 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject goldDisplay;
     public GameObject[] statsText;
-    public GameObject[] DDOL;
     public GameObject QuestPrefab;
     public GameObject QuestComplete;
     public GameObject WorkshopUI;
     public GameObject MapCam;
-    // Start is called before the first frame update
+    
+    private static GameManager _instance;
+    public static GameManager Instance{
+        get{
+            return _instance;
+        }
+    }
+
+    private void Awake() {
+        if(_instance != null && _instance != this){
+            Destroy(this.gameObject);
+        }else{
+            _instance = this;
+        }
+    }
     void Start()
     {
         QuestPrefab = GameObject.Find("QuestGiven");
         QuestComplete = GameObject.Find("QuestComplete");
         WorkshopUI = GameObject.Find("WorkshopUI");
         goldDisplay = GameObject.Find("GoldDisplayText");
-        DontDestroyOnLoad(GameObject.Find("UI"));
-        DontDestroyOnLoad(GameObject.Find("Quests"));
-        DontDestroyOnLoad(GameObject.Find("MapCam"));
+        player = GameObject.Find("Player");
+        goldDisplay = GameObject.Find("GoldDisplayText");
+        statsText[0] = GameObject.Find("Attack");
+        statsText[1] = GameObject.Find("Range");
+        statsText[2] = GameObject.Find("Atk Speed");
+        statsText[3] = GameObject.Find("Max Health");
+        statsText[4] = GameObject.Find("Max Mana");
+        statsText[5] = GameObject.Find("Level");
+        statsText[6] = GameObject.Find("Speed");
+        MapCam = GameObject.Find("MapCam");
         DontDestroyOnLoad(gameObject);
         QuestPrefab.SetActive(false);
         QuestComplete.SetActive(false);

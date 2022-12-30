@@ -12,6 +12,21 @@ public class InventoryManager : MonoBehaviour
     PlayerInventoryController PIC;
     public GameObject[] inventorySlots;
     public GameObject[] equipmentSlots;
+
+    private static InventoryManager _instance;
+    public static InventoryManager Instance{
+        get{
+            return _instance;
+        }
+    }
+
+    private void Awake() {
+        if(_instance != null && _instance != this){
+            Destroy(this.gameObject);
+        }else{
+            _instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {

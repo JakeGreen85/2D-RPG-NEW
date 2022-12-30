@@ -12,10 +12,7 @@ public class EquippedItemsController : MonoBehaviour
             Debug.Log("Level too low");
             return;
         }
-        if(equippedItems[stats.slot] != null){
-            UnequipItem(equippedItems[stats.slot]);
-        }
-        equippedItems[stats.slot] = itemToEquip;
+        GetComponent<PlayerInventoryController>().RemoveItem(itemToEquip);
         GameObject.Find("Player").GetComponent<PlayerController>().atk += stats.attack;
         GameObject.Find("Player").GetComponent<PlayerController>().attackRange += stats.attackRange;
         GameObject.Find("Player").GetComponent<PlayerController>().mana += stats.mana;
@@ -25,7 +22,11 @@ public class EquippedItemsController : MonoBehaviour
         GameObject.Find("Player").GetComponent<PlayerController>().attackSpeed += stats.attackSpeed;
         GameObject.Find("Player").GetComponent<PlayerController>().atk += stats.attack;
         GameObject.Find("Player").GetComponent<PlayerController>().speed += stats.speed;
-        GetComponent<PlayerInventoryController>().RemoveItem(itemToEquip);
+
+        if(equippedItems[stats.slot] != null){
+            UnequipItem(equippedItems[stats.slot]);
+        }
+        equippedItems[stats.slot] = itemToEquip;
         GetComponent<InventoryManager>().UpdateEquipment();
         GetComponent<InventoryManager>().UpdateInventory();
     }
@@ -48,6 +49,7 @@ public class EquippedItemsController : MonoBehaviour
         GameObject.Find("Player").GetComponent<PlayerController>().speed -= stats.speed;
         GameObject.Find("InventoryManager").GetComponent<InventoryManager>().UpdateEquipment();
         GameObject.Find("InventoryManager").GetComponent<InventoryManager>().UpdateInventory();
+        
     }
 
 

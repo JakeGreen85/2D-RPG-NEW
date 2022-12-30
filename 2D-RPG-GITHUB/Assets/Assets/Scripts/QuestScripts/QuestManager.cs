@@ -14,6 +14,20 @@ public class QuestManager : MonoBehaviour
     public GameObject questGiven;
     public GameObject questComplete;
     public GameObject givenPrefab;
+    private static QuestManager _instance;
+    public static QuestManager Instance{
+        get{
+            return _instance;
+        }
+    }
+
+    private void Awake() {
+        if(_instance != null && _instance != this){
+            Destroy(this.gameObject);
+        }else{
+            _instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {

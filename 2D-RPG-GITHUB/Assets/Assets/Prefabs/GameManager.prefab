@@ -54,6 +54,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  DDOL: []
   QuestPrefab: {fileID: 0}
   QuestComplete: {fileID: 0}
   WorkshopUI: {fileID: 0}
+  MapCam: {fileID: 0}
