@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8927607320119242358}
   - component: {fileID: 8927607320119242357}
-  - component: {fileID: 8927607320119242356}
+  - component: {fileID: 5002727068612295543}
   - component: {fileID: 8927607320119242353}
   - component: {fileID: 8927607320119242359}
   - component: {fileID: 8927607320119242352}
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8927607320119242356
+--- !u!114 &5002727068612295543
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,16 +98,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8927607320119242315}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74d40033ab0d87d419be0a2f71a04c8f, type: 3}
+  m_Script: {fileID: 11500000, guid: ed5e817ef2099e84e82009f0a535243f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
   movementDir: {x: 0, y: 0}
   mousePos: {x: 0, y: 0}
   lookDir: {x: 0, y: 0}
+  nextAttack: 0
   attackSpeed: 2
-  spawnPos: {x: -3.72, y: -2.47}
-  mainCam: {fileID: 0}
+  spawnPos: {x: 0, y: 0}
   movementFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -117,7 +117,7 @@ MonoBehaviour:
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 1
+      m_Bits: 0
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0
@@ -136,10 +136,10 @@ MonoBehaviour:
   gold: 50
   level: 1
   atk: 20
-  spells:
-  - {fileID: 9086554753943879620, guid: 16b29d6dec2bcac4088076e472b24833, type: 3}
-  invManager: {fileID: 5659360517919327375, guid: dee69194035a0ba41b93831d6b619847,
-    type: 3}
+  spells: []
+  invManager: {fileID: 0}
+  mapCam: {fileID: 0}
+  GM: {fileID: 0}
 --- !u!114 &8927607320119242353
 MonoBehaviour:
   m_ObjectHideFlags: 0

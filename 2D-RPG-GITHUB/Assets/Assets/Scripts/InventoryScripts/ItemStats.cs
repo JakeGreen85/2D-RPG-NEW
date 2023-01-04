@@ -24,4 +24,7 @@ public class ItemStats : MonoBehaviour
     public int mana;
     public int health;
     public float speed;
+    public string title;
+    public int sellPrice;
+    public int price;
 }

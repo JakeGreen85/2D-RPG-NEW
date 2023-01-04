@@ -105,3 +105,4 @@ MonoBehaviour:
   mana: 30
   health: 10
   speed: 0.5
+  title: Starter Belt

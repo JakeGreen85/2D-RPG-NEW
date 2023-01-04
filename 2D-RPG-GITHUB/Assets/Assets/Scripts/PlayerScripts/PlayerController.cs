@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 movementDir;
     public Vector2 mousePos;
     public Vector2 lookDir;
-    float nextAttack = 0f;
+    public float nextAttack = 0f;
     public float attackSpeed = 2f;
 
     // Spawn position of the player object
@@ -127,6 +127,10 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Alpha4)){
             UseAbility4();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q)){
+            // Use health potion
         }
 
         if(Input.GetKeyDown(KeyCode.B)){
@@ -273,22 +277,11 @@ public class PlayerController : MonoBehaviour
         gold += goldGained;
     }
 
-    public void UseAbility1(){
-        Attack();
-        nextAttack = Time.time + (1/attackSpeed);
-    }
+    public virtual void UseAbility1(){}
 
-    public void UseAbility2(){
-        
-    }
+    public virtual void UseAbility2(){}
 
-    public void UseAbility3(){
-        mana=maxmana;
-        manabar.SetValue(mana);
-    }
+    public virtual void UseAbility3(){}
 
-    public void UseAbility4(){
-        health += 20;
-        healthbar.SetValue(health);
-    }
+    public virtual void UseAbility4(){}
 }

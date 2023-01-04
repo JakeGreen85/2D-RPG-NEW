@@ -105,3 +105,4 @@ MonoBehaviour:
   mana: 10
   health: 0
   speed: 0
+  title: Starter Sword

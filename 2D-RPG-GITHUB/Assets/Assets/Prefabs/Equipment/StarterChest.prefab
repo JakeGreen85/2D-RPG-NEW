@@ -105,3 +105,4 @@ MonoBehaviour:
   mana: 0
   health: 15
   speed: 0
+  title: Starter Chest

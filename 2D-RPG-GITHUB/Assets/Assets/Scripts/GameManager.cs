@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public GameObject QuestComplete;
     public GameObject WorkshopUI;
     public GameObject MapCam;
+    public GameObject ToolTipUI;
+    public GameObject ShopUI;
     
     private static GameManager _instance;
     public static GameManager Instance{
@@ -49,6 +51,8 @@ public class GameManager : MonoBehaviour
         QuestComplete.SetActive(false);
         WorkshopUI.SetActive(false);
         MapCam.SetActive(false);
+        ToolTipUI.SetActive(false);
+        ShopUI.SetActive(false);
     }
 
     // Update is called once per frame
