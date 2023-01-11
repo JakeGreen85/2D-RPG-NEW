@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
     public GameObject MapCam;
     public GameObject ToolTipUI;
     public GameObject ShopUI;
+    public GameObject[] ShopButtons;
+    public InventoryManager InventoryManager;
+    public PlayerInventoryController PIC;
+    public EquippedItemsController EIC;
     
     private static GameManager _instance;
     public static GameManager Instance{
@@ -29,6 +33,7 @@ public class GameManager : MonoBehaviour
         }else{
             _instance = this;
         }
+        ShopButtons = GameObject.FindGameObjectsWithTag("ShopButton");
     }
     void Start()
     {
@@ -46,6 +51,9 @@ public class GameManager : MonoBehaviour
         statsText[5] = GameObject.Find("Level");
         statsText[6] = GameObject.Find("Speed");
         MapCam = GameObject.Find("MapCam");
+        InventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        PIC = GameObject.Find("InventoryManager").GetComponent<PlayerInventoryController>();
+        EIC = GameObject.Find("InventoryManager").GetComponent<EquippedItemsController>();
         DontDestroyOnLoad(gameObject);
         QuestPrefab.SetActive(false);
         QuestComplete.SetActive(false);

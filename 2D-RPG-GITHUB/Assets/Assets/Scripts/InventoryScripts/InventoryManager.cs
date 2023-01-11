@@ -13,19 +13,8 @@ public class InventoryManager : MonoBehaviour
     public GameObject[] inventorySlots;
     public GameObject[] equipmentSlots;
 
-    private static InventoryManager _instance;
-    public static InventoryManager Instance{
-        get{
-            return _instance;
-        }
-    }
-
     private void Awake() {
-        if(_instance != null && _instance != this){
-            Destroy(this.gameObject);
-        }else{
-            _instance = this;
-        }
+        
     }
     // Start is called before the first frame update
     void Start()
@@ -34,8 +23,8 @@ public class InventoryManager : MonoBehaviour
         inventorySlots = GameObject.FindGameObjectsWithTag("Inventory Slot");
         equipmentSlots = GameObject.FindGameObjectsWithTag("Equipment Slot");
         dUI = GetComponent<DisplayUI>();
-        EIC = GetComponent<EquippedItemsController>();
-        PIC = GetComponent<PlayerInventoryController>();
+        EIC = GameManager.Instance.EIC;
+        PIC = GameManager.Instance.PIC;
         dUI.DisplayEquipment();
         dUI.DisplayInventory();
     }

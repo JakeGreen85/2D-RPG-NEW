@@ -175,6 +175,9 @@ public class PlayerController : MonoBehaviour
                 if(col.CompareTag("QuestGiver")){
                     col.GetComponent<QuestGiver>().InterAct();
                 }
+                if(col.CompareTag("Shop")){
+                    col.GetComponent<Shop>().ToggleShop();
+                }
                 if(col.CompareTag("Workshop")){
                     col.GetComponent<Workshop>().ToggleUI();
                 }

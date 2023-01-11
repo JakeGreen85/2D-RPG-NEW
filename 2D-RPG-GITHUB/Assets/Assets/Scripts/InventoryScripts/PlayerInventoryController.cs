@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerInventoryController : MonoBehaviour
 {
     public GameObject[] inventory;
-    public GameObject invManager;
+    public InventoryManager invManager;
     public int sp = 0;
     // Start is called before the first frame update
     void Start()
     {
-        invManager = GameObject.Find("InventoryManager");
+        invManager = GameManager.Instance.InventoryManager;
     }
 
     // Update is called once per frame
@@ -23,7 +23,7 @@ public class PlayerInventoryController : MonoBehaviour
         if(sp<inventory.Length){
             inventory[sp] = item;
             sp++;
-            invManager.GetComponent<InventoryManager>().UpdateInventory();
+            invManager.UpdateInventory();
             return true;
         }
         else{
@@ -42,7 +42,7 @@ public class PlayerInventoryController : MonoBehaviour
                     }
                 }
                 sp--;
-                invManager.GetComponent<InventoryManager>().UpdateInventory();
+                invManager.UpdateInventory();
                 return;
             }
         }
