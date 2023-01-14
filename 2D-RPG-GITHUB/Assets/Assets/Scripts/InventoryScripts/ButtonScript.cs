@@ -8,45 +8,62 @@ using UnityEngine.UI;
 public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Button yourButton;
-    GameObject invManager;
     GameObject ToolTipUI;
 
-	void Start () {
+    [System.Obsolete]
+    void Start () {
 		yourButton = GetComponent<Button>();
 		yourButton.onClick.AddListener(TaskOnClick);
-        invManager = GameObject.Find("InventoryManager");
         ToolTipUI = GameManager.Instance.ToolTipUI;
 	}
 
+    [System.Obsolete]
     private void Update() {
         if(yourButton == null){
             yourButton = GetComponent<Button>();
             yourButton.onClick.AddListener(TaskOnClick);
-            invManager = GameObject.Find("InventoryManager");
         }
     }
 
-	void TaskOnClick(){
+    [System.Obsolete]
+    void TaskOnClick(){
         int n = System.Int32.Parse(gameObject.name.Substring(6));
-        if(gameObject.CompareTag("Inventory Slot") && invManager.GetComponent<PlayerInventoryController>().inventory[n-1] != null && invManager.GetComponent<PlayerInventoryController>().inventory[n-1].CompareTag("Equipment")){
-		    invManager.GetComponent<EquippedItemsController>().EquipItem(invManager.GetComponent<PlayerInventoryController>().inventory[n-1]);
+        if(gameObject.CompareTag("Inventory Slot") && GameManager.Instance.ShopUI.active && PlayerInventoryController.Instance.inventory[n-1] != null){
+            GameManager.Instance.FindClosestShop().Sell(n-1);
         }
-        else if(gameObject.CompareTag("Equipment Slot") && invManager.GetComponent<EquippedItemsController>().equippedItems[n-1] != null){
-            invManager.GetComponent<EquippedItemsController>().UnequipItem(invManager.GetComponent<EquippedItemsController>().equippedItems[n-1]);
+        else if(gameObject.CompareTag("ShopButton") && GameManager.Instance.ShopUI.active){
+            GameManager.Instance.FindClosestShop().Buy(n-1);
+        }
+        else if(gameObject.CompareTag("Inventory Slot") && PlayerInventoryController.Instance.inventory[n-1] != null && PlayerInventoryController.Instance.inventory[n-1].CompareTag("Equipment")){
+		    EquippedItemsController.Instance.EquipItem(PlayerInventoryController.Instance.inventory[n-1]);
+        }
+        else if(gameObject.CompareTag("Equipment Slot") && EquippedItemsController.Instance.equippedItems[n-1] != null){
+            EquippedItemsController.Instance.UnequipItem(EquippedItemsController.Instance.equippedItems[n-1]);
         }
 	}
 
     public void OnPointerEnter(PointerEventData data){
         int n = System.Int32.Parse(gameObject.name.Substring(6));
-        if(gameObject.CompareTag("Inventory Slot") && invManager.GetComponent<PlayerInventoryController>().inventory[n-1] != null && invManager.GetComponent<PlayerInventoryController>().inventory[n-1].CompareTag("Equipment")){
+        // ToolTipUI.transform.position = Input.mousePosition;
+        if(gameObject.CompareTag("ShopButton") && GameManager.Instance.FindClosestShop().Available[n-1] != null && !GameManager.Instance.FindClosestShop().buyback){
             ToolTipUI.SetActive(true);
-            ItemStats obj = invManager.GetComponent<PlayerInventoryController>().inventory[n-1].GetComponent<ItemStats>();
-            ToolTipUI.GetComponentInChildren<TextMeshProUGUI>().text = obj.title + "\n" + ConvertSlot(obj.slot) + "\n\nDamage: +" + obj.attack + "\nAttack Range: +" + obj.attackRange + "\nAttack Speed: " + obj.attackSpeed + "\nHealth: +" + obj.health + "\nMana: +" + obj.mana + "\nMovement Speed: +" + obj.speed + "\n\nRequired Level: " + obj.levelReq;
+            ItemStats obj = GameManager.Instance.FindClosestShop().Available[n-1].GetComponent<ItemStats>();
+            ToolTipUI.GetComponentInChildren<TextMeshProUGUI>().text = obj.title + "\n" + ConvertSlot(obj.slot) + "\n\nDamage: +" + obj.attack + "\nAttack Range: +" + obj.attackRange + "\nAttack Speed: " + obj.attackSpeed + "\nHealth: +" + obj.health + "\nMana: +" + obj.mana + "\nMovement Speed: +" + obj.speed + "\n\nRequired Level: " + obj.levelReq + "\nPrice: " + obj.price;
         }
-        else if(gameObject.CompareTag("Equipment Slot") && invManager.GetComponent<EquippedItemsController>().equippedItems[n-1] != null){
+        else if(gameObject.CompareTag("ShopButton") && GameManager.Instance.FindClosestShop().BuyBack[n-1] != null && GameManager.Instance.FindClosestShop().buyback){
             ToolTipUI.SetActive(true);
-            ItemStats obj = invManager.GetComponent<EquippedItemsController>().equippedItems[n-1].GetComponent<ItemStats>();
-            ToolTipUI.GetComponentInChildren<TextMeshProUGUI>().text = obj.title + ConvertSlot(obj.slot) + "\nDamage: +" + obj.attack + "\nAttack Range: +" + obj.attackRange + "\nAttack Speed: " + obj.attackSpeed + "\nHealth: +" + obj.health + "\nMana: +" + obj.mana + "\nMovement Speed: +" + obj.speed + "\n\nRequired Level: " + obj.levelReq;
+            ItemStats obj = GameManager.Instance.FindClosestShop().BuyBack[n-1].GetComponent<ItemStats>();
+            ToolTipUI.GetComponentInChildren<TextMeshProUGUI>().text = obj.title + "\n" + ConvertSlot(obj.slot) + "\n\nDamage: +" + obj.attack + "\nAttack Range: +" + obj.attackRange + "\nAttack Speed: " + obj.attackSpeed + "\nHealth: +" + obj.health + "\nMana: +" + obj.mana + "\nMovement Speed: +" + obj.speed + "\n\nRequired Level: " + obj.levelReq + "\nPrice: " + obj.sellPrice;
+        }
+        else if(gameObject.CompareTag("Inventory Slot") && PlayerInventoryController.Instance.inventory[n-1] != null && PlayerInventoryController.Instance.inventory[n-1].CompareTag("Equipment")){
+            ToolTipUI.SetActive(true);
+            ItemStats obj = PlayerInventoryController.Instance.inventory[n-1].GetComponent<ItemStats>();
+            ToolTipUI.GetComponentInChildren<TextMeshProUGUI>().text = obj.title + "\n" + ConvertSlot(obj.slot) + "\n\nDamage: +" + obj.attack + "\nAttack Range: +" + obj.attackRange + "\nAttack Speed: " + obj.attackSpeed + "\nHealth: +" + obj.health + "\nMana: +" + obj.mana + "\nMovement Speed: +" + obj.speed + "\n\nRequired Level: " + obj.levelReq + "\nSell Price: " + obj.sellPrice;
+        }
+        else if(gameObject.CompareTag("Equipment Slot") && EquippedItemsController.Instance.equippedItems[n-1] != null){
+            ToolTipUI.SetActive(true);
+            ItemStats obj = EquippedItemsController.Instance.equippedItems[n-1].GetComponent<ItemStats>();
+            ToolTipUI.GetComponentInChildren<TextMeshProUGUI>().text = obj.title + "\n" + ConvertSlot(obj.slot) + "\n\nDamage: +" + obj.attack + "\nAttack Range: +" + obj.attackRange + "\nAttack Speed: " + obj.attackSpeed + "\nHealth: +" + obj.health + "\nMana: +" + obj.mana + "\nMovement Speed: +" + obj.speed + "\n\nRequired Level: " + obj.levelReq + "\nSell Price: " + obj.sellPrice;
         }
     }
 

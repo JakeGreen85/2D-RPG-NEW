@@ -55,6 +55,7 @@ public class QuestManager : MonoBehaviour
         GameObject.Find("ItemRewardSprite").GetComponent<Image>().sprite = quest.GetComponent<Quest>().rewards[0].GetComponent<SpriteRenderer>().sprite;
     }
 
+    [System.Obsolete]
     public void CloseQuest(){
         if(givenPrefab.gameObject.active){
             givenPrefab.gameObject.SetActive(false);
@@ -101,6 +102,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    [System.Obsolete]
     public void ClickComplete(){
         if(questGiven.GetComponent<Quest>().complete){
             player.GetComponent<PlayerController>().gold += questGiven.GetComponent<Quest>().goldReward;

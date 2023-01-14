@@ -19,18 +19,6 @@ public class Quest : MonoBehaviour
     public int expReward;
     public string questInfo;
     public string goalInfo;
-    public Quest(int gGoal, string gType, int kGoal, string kType, string info, GameObject[] loot, int gold, int exp, string goalinfo){
-        gatherGoal = gGoal;
-        killGoal = kGoal;
-        questInfo = info;
-        rewards = loot;
-        goldReward = gold;
-        expReward = exp;
-        gatherType = gType;
-        killType = kType;
-        complete = false;
-        goalInfo = goalinfo;
-    }
 
     private void Start() {
         DontDestroyOnLoad(gameObject);

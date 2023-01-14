@@ -5,6 +5,20 @@ using UnityEngine;
 public class EquippedItemsController : MonoBehaviour
 {
     public GameObject[] equippedItems = new GameObject[10];
+    private static EquippedItemsController _instance;
+    public static EquippedItemsController Instance{
+        get{
+            return _instance;
+        }
+    }
+
+    private void Awake() {
+        if(_instance != null && _instance != this){
+            Destroy(this.gameObject);
+        }else{
+            _instance = this;
+        }
+    }
 
     public void EquipItem(GameObject itemToEquip){
         ItemStats stats = itemToEquip.GetComponent<ItemStats>();

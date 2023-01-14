@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// MOVE THIS CODE TO GAME MANAGER IN THE FUTURE
 public class DisplayUI : MonoBehaviour
 {
     public GameObject InvUI;
@@ -13,6 +15,7 @@ public class DisplayUI : MonoBehaviour
         equipUI = GameObject.Find("EquipmentUI");
     }
 
+    [System.Obsolete]
     public void DisplayEquipment(){
         if(equipUI.active){
             equipUI.SetActive(false);
@@ -21,6 +24,7 @@ public class DisplayUI : MonoBehaviour
         }
     }
 
+    [System.Obsolete]
     public void DisplayInventory(){
         if(InvUI.active){
             InvUI.SetActive(false);

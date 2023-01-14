@@ -8,6 +8,7 @@ public class Workshop : MonoBehaviour
     public GameObject selectedItem;
     public GameObject[] craftables;
     private void Start() {
+        UI = GameManager.Instance.WorkshopUI;
     }
 
     private void Update(){

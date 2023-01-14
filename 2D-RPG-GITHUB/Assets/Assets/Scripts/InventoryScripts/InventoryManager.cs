@@ -8,23 +8,37 @@ public class InventoryManager : MonoBehaviour
     public GameObject player;
     public Sprite noItem;
     DisplayUI dUI;
-    EquippedItemsController EIC;
-    PlayerInventoryController PIC;
+    public EquippedItemsController EIC;
+    public PlayerInventoryController PIC;
     public GameObject[] inventorySlots;
     public GameObject[] equipmentSlots;
 
-    private void Awake() {
-        
+    private static InventoryManager _instance;
+    public static InventoryManager Instance{
+        get{
+            return _instance;
+        }
     }
+
+    private void Awake() {
+        if(_instance != null && _instance != this){
+            Destroy(this.gameObject);
+        }else{
+            _instance = this;
+        }
+    }
+
     // Start is called before the first frame update
+    [System.Obsolete]
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        inventorySlots = GameObject.FindGameObjectsWithTag("Inventory Slot");
-        equipmentSlots = GameObject.FindGameObjectsWithTag("Equipment Slot");
+        
+        //inventorySlots = GameObject.FindGameObjectsWithTag("Inventory Slot");
+        //equipmentSlots = GameObject.FindGameObjectsWithTag("Equipment Slot");
+
         dUI = GetComponent<DisplayUI>();
-        EIC = GameManager.Instance.EIC;
-        PIC = GameManager.Instance.PIC;
+        
         dUI.DisplayEquipment();
         dUI.DisplayInventory();
     }
@@ -35,29 +49,31 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    [System.Obsolete]
     public void EnableInventory(){
         UpdateInventory();
         dUI.DisplayInventory();
     }
 
+    [System.Obsolete]
     public void EnableEquipment(){
         UpdateEquipment();
         dUI.DisplayEquipment();
     }
 
     public void UpdateInventory(){
-        for(int i = 0; i < PIC.sp; i++){
-            inventorySlots[i].GetComponent<Image>().sprite = PIC.inventory[i].GetComponent<SpriteRenderer>().sprite;
+        for(int i = 0; i < PlayerInventoryController.Instance.sp; i++){
+            inventorySlots[i].GetComponent<Image>().sprite = PlayerInventoryController.Instance.inventory[i].GetComponent<SpriteRenderer>().sprite;
         }
-        for(int j = PIC.sp; j < PIC.inventory.Length; j++){
+        for(int j = PlayerInventoryController.Instance.sp; j < PlayerInventoryController.Instance.inventory.Length; j++){
             inventorySlots[j].GetComponent<Image>().sprite = noItem;
         }
     }
 
     public void UpdateEquipment(){
-        for(int i = 0; i < EIC.equippedItems.Length; i++){
-            if(EIC.equippedItems[i] != null){
-                equipmentSlots[i].GetComponent<Image>().sprite = EIC.equippedItems[i].GetComponent<SpriteRenderer>().sprite;
+        for(int i = 0; i < EquippedItemsController.Instance.equippedItems.Length; i++){
+            if(EquippedItemsController.Instance.equippedItems[i] != null){
+                equipmentSlots[i].GetComponent<Image>().sprite = EquippedItemsController.Instance.equippedItems[i].GetComponent<SpriteRenderer>().sprite;
             }else{
                 equipmentSlots[i].GetComponent<Image>().sprite = noItem;
             }

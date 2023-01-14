@@ -73,4 +73,18 @@ public class QuestGiver : MonoBehaviour
             }
         }
     }
+
+    [System.Obsolete]
+    void CheckDistance(){
+        if(GameManager.Instance.QuestPrefab.active){
+            if(Vector3.Distance(GameManager.Instance.player.transform.position, transform.position)>3){
+                GameManager.Instance.QuestPrefab.SetActive(false);
+            }
+        }
+        if(GameManager.Instance.QuestComplete.active){
+            if(Vector3.Distance(GameManager.Instance.player.transform.position, transform.position)>3){
+                GameManager.Instance.QuestComplete.SetActive(false);
+            }
+        }
+    }
 }

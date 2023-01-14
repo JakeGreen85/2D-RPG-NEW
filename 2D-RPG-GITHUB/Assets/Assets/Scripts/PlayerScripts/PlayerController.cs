@@ -40,9 +40,9 @@ public class PlayerController : MonoBehaviour
     public int atk = 20;
 
     public GameObject[] spells;
-    public GameObject invManager;
+    public InventoryManager invManager;
     public GameObject mapCam;
-    public GameObject GM;
+    public GameManager GM;
 
     private static PlayerController _instance;
     public static PlayerController Instance{
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         expbar = GameObject.Find("ExpBar").GetComponent<HealthBar>();
         manabar = GameObject.Find("ManaBar").GetComponent<HealthBar>();
         healthbar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
-        GM = GameObject.Find("GameManager");
+        GM = GameManager.Instance;
         // transform.position = spawnPos;
         health = maxHealth;
         rb = GetComponent<Rigidbody2D>();
@@ -76,11 +76,11 @@ public class PlayerController : MonoBehaviour
         manabar.SetValue(mana);
         expbar.SetMaxValue(expToGo);
         expbar.SetValue(experience);
-        invManager = GameObject.Find("InventoryManager");
+        invManager = InventoryManager.Instance;
         DontDestroyOnLoad(gameObject);
     }
 
-
+    [System.Obsolete]
     void Update()
     {
         GetInput();
@@ -99,11 +99,20 @@ public class PlayerController : MonoBehaviour
 
         // Play player animation
         GetComponent<PlayerAnimation>().MovePlayer(horizontalInput, verticalInput, lookDir);
+
+        // If the player gains enough experience, he will level up
+        if (experience >= expToGo){
+            LevelUp();
+        }
     }
 
-    // Get user input
+    /// <summary>Gets all input from the player. Including: movement, abilities, interactions, bag, etc.</summary>
+    [System.Obsolete]
     void GetInput()
     {
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            Application.Quit();
+        }
         // MOVEMENT INPUTS - WORKS
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
@@ -134,11 +143,11 @@ public class PlayerController : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.B)){
-            invManager.GetComponent<InventoryManager>().EnableInventory();
+            InventoryManager.Instance.EnableInventory();
         }
 
         if(Input.GetKeyDown(KeyCode.C)){
-            invManager.GetComponent<InventoryManager>().EnableEquipment();
+            InventoryManager.Instance.EnableEquipment();
         }
 
         if(Input.GetKeyDown(KeyCode.M)){
@@ -176,7 +185,7 @@ public class PlayerController : MonoBehaviour
                     col.GetComponent<QuestGiver>().InterAct();
                 }
                 if(col.CompareTag("Shop")){
-                    col.GetComponent<Shop>().ToggleShop();
+                    GameManager.Instance.OpenShop();
                 }
                 if(col.CompareTag("Workshop")){
                     col.GetComponent<Workshop>().ToggleUI();
@@ -189,20 +198,15 @@ public class PlayerController : MonoBehaviour
                 
             }
         }
-
-        // If the player gains enough experience, he will level up
-        if (experience >= expToGo){
-            LevelUp();
-        }
     }
  
-    // Moves the player game object
+    /// <summary>Moves the player according to the user input</summary>
     public void MovePlayer()
     {
         transform.Translate(movementDir * Time.deltaTime * speed);
     }
 
-    // Attack with player game object
+    /// <summary>Function for basic attack by the player. The function plays the animation, changes mana, checks for collisions with enemies, and if any, will subtract health from the enemy based on the player's attack stat. Also, checks for environment (trees, rocks, etc.)</summary>
     public void Attack(){
         // Play player attacking animation
         GetComponent<PlayerAnimation>().PlayerAttack();
@@ -243,7 +247,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Function for the player to take damage
+    /// <summary>Subtracts health from the player, and checks for death. Called from external source, when colliding with enemy</summary>
     public void TakeDamage(int damage){
         health -= damage;
         healthbar.SetValue(health);
@@ -253,7 +257,7 @@ public class PlayerController : MonoBehaviour
             Invoke("Die", 2f);
         }
     }
-
+    /// <summary>Simple function for player death. Moves player back to spawn, and resets health and mana.</summary>
     void Die(){
         transform.position = spawnPos;
         health = maxHealth;
@@ -263,7 +267,7 @@ public class PlayerController : MonoBehaviour
         GetComponent<PlayerController>().enabled = true;
     }
 
-    // Function for the player to be able to level up
+    /// <summary>Called when the player experience reaches the experience to go. Increases player level and attack stat</summary>
     public void LevelUp(){
         level++;
         experience = 0;
@@ -273,18 +277,19 @@ public class PlayerController : MonoBehaviour
         expbar.SetMaxValue(expToGo);
     }
 
-    // Called from enemy controller, when the enemy dies
+    /// <summary>Gives player gold and experience from dead enemy. Called from external source</summary>
     public void enemyDead(int expGained, int goldGained){
         experience += expGained;
         expbar.SetValue(experience);
         gold += goldGained;
     }
 
+    /// <summary>Virtual function for ability 1. Setup for future implementation of multiple classes</summary>
     public virtual void UseAbility1(){}
-
+    /// <summary>Virtual function for ability 2. Setup for future implementation of multiple classes</summary>
     public virtual void UseAbility2(){}
-
+    /// <summary>Virtual function for ability 3. Setup for future implementation of multiple classes</summary>
     public virtual void UseAbility3(){}
-
+    /// <summary>Virtual function for ability 4. Setup for future implementation of multiple classes</summary>
     public virtual void UseAbility4(){}
 }
